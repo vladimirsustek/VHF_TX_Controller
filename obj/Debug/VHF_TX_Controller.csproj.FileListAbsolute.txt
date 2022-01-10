@@ -1,0 +1,11 @@
+C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.csproj.AssemblyReference.cache
+C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.csproj.SuggestedBindingRedirects.cache
+C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.Properties.Resources.resources
+C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.csproj.GenerateResource.cache
+C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.csproj.CoreCompileInputs.cache
+C:\Users\42077\source\repos\VHF_TX_Controller\bin\Debug\VHF_TX_Controller.exe.config
+C:\Users\42077\source\repos\VHF_TX_Controller\bin\Debug\VHF_TX_Controller.exe
+C:\Users\42077\source\repos\VHF_TX_Controller\bin\Debug\VHF_TX_Controller.pdb
+C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.MainForm.resources
+C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.exe
+C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.pdb
