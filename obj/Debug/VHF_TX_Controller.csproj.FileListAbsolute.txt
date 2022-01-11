@@ -1,4 +1,3 @@
-C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.csproj.AssemblyReference.cache
 C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.csproj.SuggestedBindingRedirects.cache
 C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.Properties.Resources.resources
 C:\Users\42077\source\repos\VHF_TX_Controller\obj\Debug\VHF_TX_Controller.csproj.GenerateResource.cache

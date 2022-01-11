@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TextBox tick_textBox;
             this.phInc_hScrollBar = new System.Windows.Forms.HScrollBar();
             this.volt_hScrollBar = new System.Windows.Forms.HScrollBar();
             this.ausc_hScrollBar = new System.Windows.Forms.HScrollBar();
@@ -53,32 +52,26 @@
             this.baudrate_combobox = new System.Windows.Forms.ComboBox();
             this.COM_combobox = new System.Windows.Forms.ComboBox();
             this.Commands = new System.Windows.Forms.GroupBox();
+            this.auscSend_btn = new System.Windows.Forms.Button();
+            this.voltSend_btn = new System.Windows.Forms.Button();
+            this.phIncSend_btn = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.DAC1_lab2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.volt_textBox = new System.Windows.Forms.TextBox();
             this.phInc_textbox = new System.Windows.Forms.TextBox();
             this.tick_btn = new System.Windows.Forms.Button();
             this.sendValues_btn = new System.Windows.Forms.Button();
             this.COM = new System.IO.Ports.SerialPort(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.phIncSend_btn = new System.Windows.Forms.Button();
-            this.voltSend_btn = new System.Windows.Forms.Button();
-            this.auscSend_btn = new System.Windows.Forms.Button();
-            tick_textBox = new System.Windows.Forms.TextBox();
+            this.tick_TextBox = new System.Windows.Forms.TextBox();
+            this.DAC1f_TextBox = new System.Windows.Forms.TextBox();
+            this.DAC1_lab = new System.Windows.Forms.Label();
+            this.tick_label = new System.Windows.Forms.Label();
             this.COM_groupbox.SuspendLayout();
             this.Commands.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tick_textBox
-            // 
-            tick_textBox.Location = new System.Drawing.Point(230, 168);
-            tick_textBox.Margin = new System.Windows.Forms.Padding(2);
-            tick_textBox.Name = "tick_textBox";
-            tick_textBox.Size = new System.Drawing.Size(95, 20);
-            tick_textBox.TabIndex = 42;
-            tick_textBox.Text = "100";
             // 
             // phInc_hScrollBar
             // 
@@ -94,12 +87,12 @@
             // 
             // volt_hScrollBar
             // 
-            this.volt_hScrollBar.LargeChange = 328;
+            this.volt_hScrollBar.LargeChange = 131;
             this.volt_hScrollBar.Location = new System.Drawing.Point(9, 85);
             this.volt_hScrollBar.Maximum = 39321;
             this.volt_hScrollBar.Name = "volt_hScrollBar";
             this.volt_hScrollBar.Size = new System.Drawing.Size(211, 17);
-            this.volt_hScrollBar.SmallChange = 328;
+            this.volt_hScrollBar.SmallChange = 131;
             this.volt_hScrollBar.TabIndex = 1;
             this.volt_hScrollBar.Value = 8191;
             this.volt_hScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.volt_hScrollBar_Scroll);
@@ -338,15 +331,18 @@
             // 
             // Commands
             // 
+            this.Commands.Controls.Add(this.tick_label);
+            this.Commands.Controls.Add(this.DAC1_lab);
+            this.Commands.Controls.Add(this.DAC1f_TextBox);
+            this.Commands.Controls.Add(this.tick_TextBox);
             this.Commands.Controls.Add(this.auscSend_btn);
             this.Commands.Controls.Add(this.voltSend_btn);
             this.Commands.Controls.Add(this.phIncSend_btn);
             this.Commands.Controls.Add(this.label5);
             this.Commands.Controls.Add(this.label4);
             this.Commands.Controls.Add(this.label3);
-            this.Commands.Controls.Add(this.label2);
+            this.Commands.Controls.Add(this.DAC1_lab2);
             this.Commands.Controls.Add(this.label1);
-            this.Commands.Controls.Add(tick_textBox);
             this.Commands.Controls.Add(this.volt_textBox);
             this.Commands.Controls.Add(this.phInc_textbox);
             this.Commands.Controls.Add(this.tick_btn);
@@ -362,6 +358,89 @@
             this.Commands.TabIndex = 40;
             this.Commands.TabStop = false;
             this.Commands.Text = "COM settings";
+            // 
+            // auscSend_btn
+            // 
+            this.auscSend_btn.Location = new System.Drawing.Point(114, 118);
+            this.auscSend_btn.Margin = new System.Windows.Forms.Padding(2);
+            this.auscSend_btn.Name = "auscSend_btn";
+            this.auscSend_btn.Size = new System.Drawing.Size(36, 24);
+            this.auscSend_btn.TabIndex = 50;
+            this.auscSend_btn.Text = "->";
+            this.auscSend_btn.UseVisualStyleBackColor = true;
+            this.auscSend_btn.Click += new System.EventHandler(this.auscSend_btn_Click);
+            // 
+            // voltSend_btn
+            // 
+            this.voltSend_btn.Location = new System.Drawing.Point(314, 81);
+            this.voltSend_btn.Margin = new System.Windows.Forms.Padding(2);
+            this.voltSend_btn.Name = "voltSend_btn";
+            this.voltSend_btn.Size = new System.Drawing.Size(36, 24);
+            this.voltSend_btn.TabIndex = 49;
+            this.voltSend_btn.Text = "->";
+            this.voltSend_btn.UseVisualStyleBackColor = true;
+            this.voltSend_btn.Click += new System.EventHandler(this.voltSend_btn_Click);
+            // 
+            // phIncSend_btn
+            // 
+            this.phIncSend_btn.Location = new System.Drawing.Point(314, 44);
+            this.phIncSend_btn.Margin = new System.Windows.Forms.Padding(2);
+            this.phIncSend_btn.Name = "phIncSend_btn";
+            this.phIncSend_btn.Size = new System.Drawing.Size(36, 24);
+            this.phIncSend_btn.TabIndex = 48;
+            this.phIncSend_btn.Text = "->";
+            this.phIncSend_btn.UseVisualStyleBackColor = true;
+            this.phIncSend_btn.Click += new System.EventHandler(this.phIncSend_btn_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(23, 112);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(69, 13);
+            this.label5.TabIndex = 47;
+            this.label5.Text = "Audio source";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(59, 72);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(107, 13);
+            this.label4.TabIndex = 46;
+            this.label4.Text = "DAC1 output Voltage";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(59, 34);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(117, 13);
+            this.label3.TabIndex = 45;
+            this.label3.Text = "DAC0 phase Increment";
+            // 
+            // DAC1_lab2
+            // 
+            this.DAC1_lab2.AutoSize = true;
+            this.DAC1_lab2.Location = new System.Drawing.Point(279, 89);
+            this.DAC1_lab2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.DAC1_lab2.Name = "DAC1_lab2";
+            this.DAC1_lab2.Size = new System.Drawing.Size(22, 13);
+            this.DAC1_lab2.TabIndex = 44;
+            this.DAC1_lab2.Text = "mV";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(274, 50);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 43;
+            this.label1.Text = "MHz";
             // 
             // volt_textBox
             // 
@@ -383,7 +462,7 @@
             // 
             // tick_btn
             // 
-            this.tick_btn.Location = new System.Drawing.Point(155, 165);
+            this.tick_btn.Location = new System.Drawing.Point(134, 165);
             this.tick_btn.Margin = new System.Windows.Forms.Padding(2);
             this.tick_btn.Name = "tick_btn";
             this.tick_btn.Size = new System.Drawing.Size(64, 24);
@@ -403,88 +482,43 @@
             this.sendValues_btn.UseVisualStyleBackColor = true;
             this.sendValues_btn.Click += new System.EventHandler(this.sendValues_btn_Click);
             // 
-            // label1
+            // tick_TextBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(274, 50);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
-            this.label1.TabIndex = 43;
-            this.label1.Text = "MHz";
+            this.tick_TextBox.Location = new System.Drawing.Point(203, 168);
+            this.tick_TextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.tick_TextBox.Name = "tick_TextBox";
+            this.tick_TextBox.Size = new System.Drawing.Size(99, 20);
+            this.tick_TextBox.TabIndex = 51;
+            this.tick_TextBox.Text = "0";
             // 
-            // label2
+            // DAC1f_TextBox
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(279, 89);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(22, 13);
-            this.label2.TabIndex = 44;
-            this.label2.Text = "mV";
+            this.DAC1f_TextBox.Location = new System.Drawing.Point(230, 109);
+            this.DAC1f_TextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.DAC1f_TextBox.Name = "DAC1f_TextBox";
+            this.DAC1f_TextBox.Size = new System.Drawing.Size(40, 20);
+            this.DAC1f_TextBox.TabIndex = 52;
+            this.DAC1f_TextBox.Text = "100";
             // 
-            // label3
+            // DAC1_lab
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(59, 34);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(117, 13);
-            this.label3.TabIndex = 45;
-            this.label3.Text = "DAC0 phase Increment";
+            this.DAC1_lab.AutoSize = true;
+            this.DAC1_lab.Location = new System.Drawing.Point(279, 112);
+            this.DAC1_lab.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.DAC1_lab.Name = "DAC1_lab";
+            this.DAC1_lab.Size = new System.Drawing.Size(29, 13);
+            this.DAC1_lab.TabIndex = 53;
+            this.DAC1_lab.Text = "MHz";
             // 
-            // label4
+            // tick_label
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(59, 72);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(107, 13);
-            this.label4.TabIndex = 46;
-            this.label4.Text = "DAC1 output Voltage";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(23, 112);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 13);
-            this.label5.TabIndex = 47;
-            this.label5.Text = "Audio source";
-            // 
-            // phIncSend_btn
-            // 
-            this.phIncSend_btn.Location = new System.Drawing.Point(314, 44);
-            this.phIncSend_btn.Margin = new System.Windows.Forms.Padding(2);
-            this.phIncSend_btn.Name = "phIncSend_btn";
-            this.phIncSend_btn.Size = new System.Drawing.Size(36, 24);
-            this.phIncSend_btn.TabIndex = 48;
-            this.phIncSend_btn.Text = "->";
-            this.phIncSend_btn.UseVisualStyleBackColor = true;
-            this.phIncSend_btn.Click += new System.EventHandler(this.phIncSend_btn_Click);
-            // 
-            // voltSend_btn
-            // 
-            this.voltSend_btn.Location = new System.Drawing.Point(314, 81);
-            this.voltSend_btn.Margin = new System.Windows.Forms.Padding(2);
-            this.voltSend_btn.Name = "voltSend_btn";
-            this.voltSend_btn.Size = new System.Drawing.Size(36, 24);
-            this.voltSend_btn.TabIndex = 49;
-            this.voltSend_btn.Text = "->";
-            this.voltSend_btn.UseVisualStyleBackColor = true;
-            this.voltSend_btn.Click += new System.EventHandler(this.voltSend_btn_Click);
-            // 
-            // auscSend_btn
-            // 
-            this.auscSend_btn.Location = new System.Drawing.Point(114, 118);
-            this.auscSend_btn.Margin = new System.Windows.Forms.Padding(2);
-            this.auscSend_btn.Name = "auscSend_btn";
-            this.auscSend_btn.Size = new System.Drawing.Size(36, 24);
-            this.auscSend_btn.TabIndex = 50;
-            this.auscSend_btn.Text = "->";
-            this.auscSend_btn.UseVisualStyleBackColor = true;
-            this.auscSend_btn.Click += new System.EventHandler(this.auscSend_btn_Click);
+            this.tick_label.AutoSize = true;
+            this.tick_label.Location = new System.Drawing.Point(303, 171);
+            this.tick_label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.tick_label.Name = "tick_label";
+            this.tick_label.Size = new System.Drawing.Size(47, 13);
+            this.tick_label.TabIndex = 54;
+            this.tick_label.Text = "seconds";
             // 
             // MainForm
             // 
@@ -538,11 +572,15 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label DAC1_lab2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button auscSend_btn;
         private System.Windows.Forms.Button voltSend_btn;
         private System.Windows.Forms.Button phIncSend_btn;
+        private System.Windows.Forms.TextBox tick_TextBox;
+        private System.Windows.Forms.Label DAC1_lab;
+        private System.Windows.Forms.TextBox DAC1f_TextBox;
+        private System.Windows.Forms.Label tick_label;
     }
 }
 

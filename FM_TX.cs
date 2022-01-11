@@ -78,13 +78,14 @@ namespace VHF_TX_Controller
 
             try
             {
-                result = this.WriteAndReadLine(cmd_setAudioSource + hexArg, ONE_LINE_RESPONSE);
+                result = this.WriteAndReadLine(cmd_getSystemTick + hexArg, ONE_LINE_RESPONSE);
                 result = cmd_getSystemTick + hexArg + " = RX: " + result;
 
             }
             catch (Exception e)
             {
-                result = e.ToString();
+                //result = e.ToString();
+                result = "Exception";
             }
 
             return result;

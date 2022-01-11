@@ -46,6 +46,10 @@ namespace VHF_TX_Controller
             int volt = (int)ivolt;
             this.volt_textBox.Text = volt.ToString();
 
+            double voltV = (double)volt / 1000;
+            double freqcalc = (-1.6608 * (voltV * voltV)) + (11.451 * voltV) + 64.448;
+            this.DAC1f_TextBox.Text = freqcalc.ToString();
+
             this.volt_textBox.Text = volt.ToString();
             this.phInc_textbox.Text = freq.ToString();
         }
@@ -74,6 +78,10 @@ namespace VHF_TX_Controller
             double ivolt = (double)this.volt_hScrollBar.Value * delta_v;
             int volt = (int)ivolt;
             this.volt_textBox.Text = volt.ToString();
+
+            double voltV = (double)volt / 1000;
+            double freqcalc = (-1.6608 * (voltV * voltV)) + (11.451 * voltV) + 64.448;
+            this.DAC1f_TextBox.Text = freqcalc.ToString();
 
             if (e.Type == ScrollEventType.EndScroll)
             {
@@ -150,7 +158,17 @@ namespace VHF_TX_Controller
             if (this.Device.IsOpen)
             {
                 string strTick = this.Device.cmdFM_TX_getSystemTick();
-                this.printlineTimestamped(this.ComLog, strTick);
+
+                if (strTick.Contains("TCK"))
+                {
+                    string[] split = strTick.Split(':');
+                    if (split.Length == 3)
+                    {
+                        int tick = Convert.ToInt32(split[2], 16);
+                        float tick_seconds = (float)tick / 1000;
+                        this.tick_TextBox.Text = tick_seconds.ToString();
+                    }
+                }
             }
 
         }
