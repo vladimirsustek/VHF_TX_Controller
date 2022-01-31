@@ -75,11 +75,17 @@ namespace VHF_TX_Controller
             int arg = 0;
             string result;
             string hexArg = arg.ToString("X").PadLeft(8, '0');
+            string hexRes;
 
             try
             {
                 result = this.WriteAndReadLine(cmd_getSystemTick + hexArg, ONE_LINE_RESPONSE);
-                result = cmd_getSystemTick + hexArg + " = RX: " + result;
+                string[] retval = result.Split(':');
+                byte[] bytes = Encoding.ASCII.GetBytes(retval[1]);
+                Array.Reverse(bytes, 0, bytes.Length);
+                UInt32 tick = BitConverter.ToUInt32(bytes, 0);
+                hexRes = tick.ToString("X").PadLeft(8, '0');
+                result = cmd_getSystemTick + hexArg + " = RX: " + retval[0] + ':' + hexRes;
 
             }
             catch (Exception e)
