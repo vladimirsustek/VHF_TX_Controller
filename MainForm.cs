@@ -30,16 +30,37 @@ namespace VHF_TX_Controller
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            string[] ports = SerialPort.GetPortNames();
-            this.COM_combobox.Items.AddRange(ports);
             this.baudrate_combobox.SelectedIndex = this.baudrate_combobox.FindStringExact("57600");
             this.stopbits_combobox.SelectedIndex = this.stopbits_combobox.FindStringExact("One");
             this.parity_combobox.SelectedIndex = this.parity_combobox.FindStringExact("None");
 
-            double delta_f = 3.576279, div_10kHz = 10000, div_MHz = 100;
-            int ifreq = (int)(((double)this.phInc_hScrollBar.Value * delta_f) / div_10kHz);
-            float freq = (float)ifreq / 100;
-            this.phInc_textbox.Text = freq.ToString();
+            this.DAC1f_TextBox.Text = this.GetDAC1Freq().ToString();
+            this.phInc_textbox.Text = this.GetDAC0Freq().ToString();
+            this.mixed_TextBox.Text = (this.GetDAC1Freq() + this.GetDAC0Freq()).ToString();
+        }
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            // if (e.Type == ScrollEventType.EndScroll) // future usage ?
+        }
+
+        private double GetDAC1Freq()
+        {
+            // DAC to VCO chain control : 16b AD5761 + MAX2606:680nH
+            // DAC delta_v = VoutMAX/ctr_word_max = 5000 mV/(2^16-1) = 0.076294 mV
+            // DAC voltage = delta_v * input word
+
+            // MAX 2606 has range of controlled frequency 0.4V - 2.4V (but handles 5V)
+            // Measured:
+            // 0.4V   => 68.69 MHz
+            // 0.6V   => 70.84 MHz
+            // 0.625V => 70.935 MHz
+            // 1.85V  => 74.99 MHz           
+            // 2.4V   => 82.38 MHz
+            //
+            // so, MAX 2606 has relation between fout = func(ftune) aproximable as
+            // y = -1.6608*x^2 + 11.451*x + 64.448
+            //
+            // Note that calculation is just estimation
 
             double delta_v = 0.076294;
             double ivolt = (double)this.volt_hScrollBar.Value * delta_v;
@@ -48,60 +69,52 @@ namespace VHF_TX_Controller
 
             double voltV = (double)volt / 1000;
             double freqcalc = (-1.6608 * (voltV * voltV)) + (11.451 * voltV) + 64.448;
-            this.DAC1f_TextBox.Text = freqcalc.ToString();
 
-            this.volt_textBox.Text = volt.ToString();
-            this.phInc_textbox.Text = freq.ToString();
+            return freqcalc;
         }
-        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+
+        private float GetDAC0Freq()
         {
-            if (e.Type == ScrollEventType.EndScroll)
-            {
-            }
+            // 25b phase width, 120MHz fclk DDS control
+            // delta_v = fclk/phase width = (120*10e6 Hz)(2^25-1) = 3.576279Hz
+            // div_10kHz used to divide frequency in Hz into tens of kHz
+            // DDS frequency calculation: f = delta_v * phInc
+            // Calculation is digititally precise value => calc should meet real value
+            double delta_f = 3.576279, div_10kHz = 10000;
+            int ifreq = (int)(((double)this.phInc_hScrollBar.Value * delta_f) / div_10kHz);
+            float freq = (float)ifreq / 100;
+
+            return freq;
         }
 
         private void phInc_hScrollBar_Scroll(object sender, ScrollEventArgs e)
         {
-            double delta_f = 3.576279, div_10kHz = 10000, div_MHz = 100;
-            int ifreq = (int)(((double)this.phInc_hScrollBar.Value * delta_f) / div_10kHz);
-            float freq = (float)ifreq / 100;
-            this.phInc_textbox.Text = freq.ToString();
-
-            if (e.Type == ScrollEventType.EndScroll)
-            {
-            }
+            this.phInc_textbox.Text = this.GetDAC0Freq().ToString();
+            this.mixed_TextBox.Text = (this.GetDAC0Freq() + this.GetDAC1Freq()).ToString();
+            //if (e.Type == ScrollEventType.EndScroll) ; // left for furture usage
         }
 
         private void volt_hScrollBar_Scroll(object sender, ScrollEventArgs e)
         {
-            double delta_v = 0.076294;
-            double ivolt = (double)this.volt_hScrollBar.Value * delta_v;
-            int volt = (int)ivolt;
-            this.volt_textBox.Text = volt.ToString();
-
-            double voltV = (double)volt / 1000;
-            double freqcalc = (-1.6608 * (voltV * voltV)) + (11.451 * voltV) + 64.448;
-            this.DAC1f_TextBox.Text = freqcalc.ToString();
-
-            if (e.Type == ScrollEventType.EndScroll)
-            {
-            }
+            this.DAC1f_TextBox.Text = GetDAC1Freq().ToString();
+            this.mixed_TextBox.Text = (this.GetDAC0Freq() + this.GetDAC1Freq()).ToString();
+            //if (e.Type == ScrollEventType.EndScroll) ; // left for furture usage
         }
         private void ausc_hScrollBar_Scroll(object sender, ScrollEventArgs e)
         {
-            if (e.Type == ScrollEventType.EndScroll)
-            {
-            }
+            // if (e.Type == ScrollEventType.EndScroll) ; // left for furture usage
+
         }
 
         private void COM_combobox_Clicked(object sender, EventArgs e)
         {
+            string[] ports = SerialPort.GetPortNames();
+
             for (int index = 0; index < this.COM_combobox.Items.Count; index++)
             {
                 this.COM_combobox.Items.RemoveAt(index);
             }
-
-            string[] ports = SerialPort.GetPortNames();
+            this.COM_combobox.Items.Clear();
             this.COM_combobox.Items.AddRange(ports);
         }
 
@@ -155,19 +168,21 @@ namespace VHF_TX_Controller
 
         private void tick_btn_Click(object sender, EventArgs e)
         {
-            if (this.Device.IsOpen)
-            {
-                string strTick = this.Device.cmdFM_TX_getSystemTick();
 
-                if (strTick.Contains("TCK"))
+            string strTick = this.Device.cmdFM_TX_getSystemTick();
+
+            // Awaited response: TCK:0123457\n - hexadecimal 32b
+            // Needed split, parsing and conversion of tickval
+            if (strTick.Contains("TCK"))
+            {
+                string[] split = strTick.Split(':');
+                if (split.Length == 3)
                 {
-                    string[] split = strTick.Split(':');
-                    if (split.Length == 3)
-                    {
-                        int tick = Convert.ToInt32(split[2], 16);
-                        float tick_seconds = (float)tick / 1000;
-                        this.tick_TextBox.Text = tick_seconds.ToString();
-                    }
+                    int tick = Convert.ToInt32(split[2], 16);
+                    float tick_seconds = (float)tick / 1000;
+                    this.tick_TextBox.Text = tick_seconds.ToString();
+                    this.printlineTimestamped(this.ComLog, strTick);
+
                 }
             }
 
@@ -189,6 +204,10 @@ namespace VHF_TX_Controller
         {
             string strAudSrc = this.Device.cmdFM_TX_setAudioSource(this.ausc_hScrollBar.Value);
             this.printlineTimestamped(this.ComLog, strAudSrc);
+        }
+
+        private void volt_textBox_TextChanged(object sender, EventArgs e)
+        {
         }
     }
 }

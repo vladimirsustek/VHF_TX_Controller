@@ -76,7 +76,10 @@ namespace VHF_TX_Controller
 
         public string WriteAndReadLine(string line)
         {
-            string response;
+            string response = "";
+
+            if (!this.IsOpen)
+                return "Port unavailable";
 
             Console.WriteLine(this.PortName);
             this.WriteLine(line);
@@ -88,6 +91,10 @@ namespace VHF_TX_Controller
         public string WriteAndReadLine(string line, int lines)
         {
             string response = "";
+
+            if (!this.IsOpen)
+                return "Port unavailable";
+
 
             this.WriteLine(line);
 
@@ -103,6 +110,9 @@ namespace VHF_TX_Controller
         public string WriteAndReadBytes(string line, int bytes = 14)
         {
             string response = "";
+
+            if (!this.IsOpen)
+                return "Port unavailable";
 
             this.WriteLine(line);
 
