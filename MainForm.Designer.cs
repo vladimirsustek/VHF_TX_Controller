@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.phInc_hScrollBar = new System.Windows.Forms.HScrollBar();
             this.volt_hScrollBar = new System.Windows.Forms.HScrollBar();
-            this.ausc_hScrollBar = new System.Windows.Forms.HScrollBar();
             this.ComLog = new System.Windows.Forms.RichTextBox();
             this.COM_groupbox = new System.Windows.Forms.GroupBox();
             this.COMState_label = new System.Windows.Forms.Label();
@@ -52,6 +51,10 @@
             this.baudrate_combobox = new System.Windows.Forms.ComboBox();
             this.COM_combobox = new System.Windows.Forms.ComboBox();
             this.Commands = new System.Windows.Forms.GroupBox();
+            this.rfmode_comboBox = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.mixed_TextBox = new System.Windows.Forms.TextBox();
             this.tick_label = new System.Windows.Forms.Label();
             this.DAC1_lab = new System.Windows.Forms.Label();
             this.DAC1f_TextBox = new System.Windows.Forms.TextBox();
@@ -69,11 +72,10 @@
             this.tick_btn = new System.Windows.Forms.Button();
             this.sendValues_btn = new System.Windows.Forms.Button();
             this.COM = new System.IO.Ports.SerialPort(this.components);
-            this.mixed_TextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.miscellaneous_groupbox = new System.Windows.Forms.GroupBox();
             this.COM_groupbox.SuspendLayout();
             this.Commands.SuspendLayout();
+            this.miscellaneous_groupbox.SuspendLayout();
             this.SuspendLayout();
             // 
             // phInc_hScrollBar
@@ -100,21 +102,11 @@
             this.volt_hScrollBar.Value = 8191;
             this.volt_hScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.volt_hScrollBar_Scroll);
             // 
-            // ausc_hScrollBar
-            // 
-            this.ausc_hScrollBar.LargeChange = 1;
-            this.ausc_hScrollBar.Location = new System.Drawing.Point(9, 125);
-            this.ausc_hScrollBar.Maximum = 1;
-            this.ausc_hScrollBar.Name = "ausc_hScrollBar";
-            this.ausc_hScrollBar.Size = new System.Drawing.Size(81, 17);
-            this.ausc_hScrollBar.TabIndex = 2;
-            this.ausc_hScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ausc_hScrollBar_Scroll);
-            // 
             // ComLog
             // 
             this.ComLog.Location = new System.Drawing.Point(386, 32);
             this.ComLog.Name = "ComLog";
-            this.ComLog.Size = new System.Drawing.Size(302, 380);
+            this.ComLog.Size = new System.Drawing.Size(302, 467);
             this.ComLog.TabIndex = 3;
             this.ComLog.Text = "";
             // 
@@ -138,10 +130,10 @@
             this.COM_groupbox.Controls.Add(this.baudrate_combobox);
             this.COM_groupbox.Controls.Add(this.COM_combobox);
             this.COM_groupbox.Location = new System.Drawing.Point(11, 32);
-            this.COM_groupbox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.COM_groupbox.Margin = new System.Windows.Forms.Padding(2);
             this.COM_groupbox.Name = "COM_groupbox";
-            this.COM_groupbox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.COM_groupbox.Size = new System.Drawing.Size(343, 151);
+            this.COM_groupbox.Padding = new System.Windows.Forms.Padding(2);
+            this.COM_groupbox.Size = new System.Drawing.Size(354, 151);
             this.COM_groupbox.TabIndex = 4;
             this.COM_groupbox.TabStop = false;
             this.COM_groupbox.Text = "COM settings";
@@ -169,7 +161,7 @@
             // COMConnectDisconnect_btn
             // 
             this.COMConnectDisconnect_btn.Location = new System.Drawing.Point(186, 88);
-            this.COMConnectDisconnect_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.COMConnectDisconnect_btn.Margin = new System.Windows.Forms.Padding(2);
             this.COMConnectDisconnect_btn.Name = "COMConnectDisconnect_btn";
             this.COMConnectDisconnect_btn.Size = new System.Drawing.Size(116, 24);
             this.COMConnectDisconnect_btn.TabIndex = 16;
@@ -200,7 +192,7 @@
             // RxTimeout_textedit
             // 
             this.RxTimeout_textedit.Location = new System.Drawing.Point(245, 54);
-            this.RxTimeout_textedit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RxTimeout_textedit.Margin = new System.Windows.Forms.Padding(2);
             this.RxTimeout_textedit.Name = "RxTimeout_textedit";
             this.RxTimeout_textedit.Size = new System.Drawing.Size(56, 20);
             this.RxTimeout_textedit.TabIndex = 35;
@@ -209,7 +201,7 @@
             // TxTimeout_textedit
             // 
             this.TxTimeout_textedit.Location = new System.Drawing.Point(245, 22);
-            this.TxTimeout_textedit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TxTimeout_textedit.Margin = new System.Windows.Forms.Padding(2);
             this.TxTimeout_textedit.Name = "TxTimeout_textedit";
             this.TxTimeout_textedit.Size = new System.Drawing.Size(56, 20);
             this.TxTimeout_textedit.TabIndex = 24;
@@ -284,7 +276,7 @@
             "Odd",
             "Even"});
             this.parity_combobox.Location = new System.Drawing.Point(80, 127);
-            this.parity_combobox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.parity_combobox.Margin = new System.Windows.Forms.Padding(2);
             this.parity_combobox.Name = "parity_combobox";
             this.parity_combobox.Size = new System.Drawing.Size(69, 21);
             this.parity_combobox.TabIndex = 27;
@@ -296,7 +288,7 @@
             "One",
             "Two"});
             this.stopbits_combobox.Location = new System.Drawing.Point(80, 91);
-            this.stopbits_combobox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.stopbits_combobox.Margin = new System.Windows.Forms.Padding(2);
             this.stopbits_combobox.Name = "stopbits_combobox";
             this.stopbits_combobox.Size = new System.Drawing.Size(69, 21);
             this.stopbits_combobox.TabIndex = 26;
@@ -317,7 +309,7 @@
             "115200",
             "230400"});
             this.baudrate_combobox.Location = new System.Drawing.Point(80, 57);
-            this.baudrate_combobox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.baudrate_combobox.Margin = new System.Windows.Forms.Padding(2);
             this.baudrate_combobox.Name = "baudrate_combobox";
             this.baudrate_combobox.Size = new System.Drawing.Size(69, 21);
             this.baudrate_combobox.TabIndex = 25;
@@ -326,7 +318,7 @@
             // 
             this.COM_combobox.FormattingEnabled = true;
             this.COM_combobox.Location = new System.Drawing.Point(80, 24);
-            this.COM_combobox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.COM_combobox.Margin = new System.Windows.Forms.Padding(2);
             this.COM_combobox.Name = "COM_combobox";
             this.COM_combobox.Size = new System.Drawing.Size(69, 21);
             this.COM_combobox.TabIndex = 24;
@@ -334,13 +326,12 @@
             // 
             // Commands
             // 
+            this.Commands.Controls.Add(this.rfmode_comboBox);
             this.Commands.Controls.Add(this.label6);
             this.Commands.Controls.Add(this.label2);
             this.Commands.Controls.Add(this.mixed_TextBox);
-            this.Commands.Controls.Add(this.tick_label);
             this.Commands.Controls.Add(this.DAC1_lab);
             this.Commands.Controls.Add(this.DAC1f_TextBox);
-            this.Commands.Controls.Add(this.tick_TextBox);
             this.Commands.Controls.Add(this.auscSend_btn);
             this.Commands.Controls.Add(this.voltSend_btn);
             this.Commands.Controls.Add(this.phIncSend_btn);
@@ -351,24 +342,68 @@
             this.Commands.Controls.Add(this.label1);
             this.Commands.Controls.Add(this.volt_textBox);
             this.Commands.Controls.Add(this.phInc_textbox);
-            this.Commands.Controls.Add(this.tick_btn);
             this.Commands.Controls.Add(this.sendValues_btn);
             this.Commands.Controls.Add(this.phInc_hScrollBar);
             this.Commands.Controls.Add(this.volt_hScrollBar);
-            this.Commands.Controls.Add(this.ausc_hScrollBar);
             this.Commands.Location = new System.Drawing.Point(11, 206);
-            this.Commands.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Commands.Margin = new System.Windows.Forms.Padding(2);
             this.Commands.Name = "Commands";
-            this.Commands.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Commands.Padding = new System.Windows.Forms.Padding(2);
             this.Commands.Size = new System.Drawing.Size(354, 206);
             this.Commands.TabIndex = 40;
             this.Commands.TabStop = false;
             this.Commands.Text = "COM settings";
             // 
+            // rfmode_comboBox
+            // 
+            this.rfmode_comboBox.FormattingEnabled = true;
+            this.rfmode_comboBox.Items.AddRange(new object[] {
+            "DAC0-Off",
+            "TestSine",
+            "TestSinePilot",
+            "Mono",
+            "MonoPilot",
+            "MonoStereo",
+            "MonoStereoPilot"});
+            this.rfmode_comboBox.Location = new System.Drawing.Point(18, 128);
+            this.rfmode_comboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.rfmode_comboBox.Name = "rfmode_comboBox";
+            this.rfmode_comboBox.Size = new System.Drawing.Size(112, 21);
+            this.rfmode_comboBox.TabIndex = 40;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(279, 136);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(29, 13);
+            this.label6.TabIndex = 57;
+            this.label6.Text = "MHz";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(192, 136);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 56;
+            this.label2.Text = "mixed";
+            // 
+            // mixed_TextBox
+            // 
+            this.mixed_TextBox.Location = new System.Drawing.Point(230, 133);
+            this.mixed_TextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.mixed_TextBox.Name = "mixed_TextBox";
+            this.mixed_TextBox.Size = new System.Drawing.Size(40, 20);
+            this.mixed_TextBox.TabIndex = 55;
+            this.mixed_TextBox.Text = "0";
+            // 
             // tick_label
             // 
             this.tick_label.AutoSize = true;
-            this.tick_label.Location = new System.Drawing.Point(303, 171);
+            this.tick_label.Location = new System.Drawing.Point(130, 34);
             this.tick_label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tick_label.Name = "tick_label";
             this.tick_label.Size = new System.Drawing.Size(47, 13);
@@ -388,7 +423,7 @@
             // DAC1f_TextBox
             // 
             this.DAC1f_TextBox.Location = new System.Drawing.Point(230, 109);
-            this.DAC1f_TextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DAC1f_TextBox.Margin = new System.Windows.Forms.Padding(2);
             this.DAC1f_TextBox.Name = "DAC1f_TextBox";
             this.DAC1f_TextBox.Size = new System.Drawing.Size(40, 20);
             this.DAC1f_TextBox.TabIndex = 52;
@@ -396,28 +431,28 @@
             // 
             // tick_TextBox
             // 
-            this.tick_TextBox.Location = new System.Drawing.Point(203, 168);
-            this.tick_TextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tick_TextBox.Location = new System.Drawing.Point(80, 31);
+            this.tick_TextBox.Margin = new System.Windows.Forms.Padding(2);
             this.tick_TextBox.Name = "tick_TextBox";
-            this.tick_TextBox.Size = new System.Drawing.Size(99, 20);
+            this.tick_TextBox.Size = new System.Drawing.Size(50, 20);
             this.tick_TextBox.TabIndex = 51;
             this.tick_TextBox.Text = "0";
             // 
             // auscSend_btn
             // 
-            this.auscSend_btn.Location = new System.Drawing.Point(114, 118);
-            this.auscSend_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.auscSend_btn.Location = new System.Drawing.Point(134, 125);
+            this.auscSend_btn.Margin = new System.Windows.Forms.Padding(2);
             this.auscSend_btn.Name = "auscSend_btn";
             this.auscSend_btn.Size = new System.Drawing.Size(36, 24);
             this.auscSend_btn.TabIndex = 50;
             this.auscSend_btn.Text = "->";
             this.auscSend_btn.UseVisualStyleBackColor = true;
-            this.auscSend_btn.Click += new System.EventHandler(this.auscSend_btn_Click);
+            this.auscSend_btn.Click += new System.EventHandler(this.rfmdSend_btn_Click);
             // 
             // voltSend_btn
             // 
             this.voltSend_btn.Location = new System.Drawing.Point(314, 81);
-            this.voltSend_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.voltSend_btn.Margin = new System.Windows.Forms.Padding(2);
             this.voltSend_btn.Name = "voltSend_btn";
             this.voltSend_btn.Size = new System.Drawing.Size(36, 24);
             this.voltSend_btn.TabIndex = 49;
@@ -428,7 +463,7 @@
             // phIncSend_btn
             // 
             this.phIncSend_btn.Location = new System.Drawing.Point(314, 44);
-            this.phIncSend_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.phIncSend_btn.Margin = new System.Windows.Forms.Padding(2);
             this.phIncSend_btn.Name = "phIncSend_btn";
             this.phIncSend_btn.Size = new System.Drawing.Size(36, 24);
             this.phIncSend_btn.TabIndex = 48;
@@ -439,12 +474,12 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(23, 112);
+            this.label5.Location = new System.Drawing.Point(15, 109);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 13);
+            this.label5.Size = new System.Drawing.Size(111, 13);
             this.label5.TabIndex = 47;
-            this.label5.Text = "Audio source";
+            this.label5.Text = "RF Transmitting Mode";
             // 
             // label4
             // 
@@ -489,7 +524,7 @@
             // volt_textBox
             // 
             this.volt_textBox.Location = new System.Drawing.Point(230, 85);
-            this.volt_textBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.volt_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.volt_textBox.Name = "volt_textBox";
             this.volt_textBox.Size = new System.Drawing.Size(40, 20);
             this.volt_textBox.TabIndex = 41;
@@ -499,7 +534,7 @@
             // phInc_textbox
             // 
             this.phInc_textbox.Location = new System.Drawing.Point(230, 47);
-            this.phInc_textbox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.phInc_textbox.Margin = new System.Windows.Forms.Padding(2);
             this.phInc_textbox.Name = "phInc_textbox";
             this.phInc_textbox.Size = new System.Drawing.Size(40, 20);
             this.phInc_textbox.TabIndex = 40;
@@ -507,8 +542,8 @@
             // 
             // tick_btn
             // 
-            this.tick_btn.Location = new System.Drawing.Point(134, 165);
-            this.tick_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tick_btn.Location = new System.Drawing.Point(14, 28);
+            this.tick_btn.Margin = new System.Windows.Forms.Padding(2);
             this.tick_btn.Name = "tick_btn";
             this.tick_btn.Size = new System.Drawing.Size(64, 24);
             this.tick_btn.TabIndex = 17;
@@ -519,48 +554,32 @@
             // sendValues_btn
             // 
             this.sendValues_btn.Location = new System.Drawing.Point(14, 165);
-            this.sendValues_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sendValues_btn.Margin = new System.Windows.Forms.Padding(2);
             this.sendValues_btn.Name = "sendValues_btn";
             this.sendValues_btn.Size = new System.Drawing.Size(116, 24);
             this.sendValues_btn.TabIndex = 16;
-            this.sendValues_btn.Text = "Send values";
+            this.sendValues_btn.Text = "Send all values";
             this.sendValues_btn.UseVisualStyleBackColor = true;
             this.sendValues_btn.Click += new System.EventHandler(this.sendValues_btn_Click);
             // 
-            // mixed_TextBox
+            // miscellaneous_groupbox
             // 
-            this.mixed_TextBox.Location = new System.Drawing.Point(230, 133);
-            this.mixed_TextBox.Margin = new System.Windows.Forms.Padding(2);
-            this.mixed_TextBox.Name = "mixed_TextBox";
-            this.mixed_TextBox.Size = new System.Drawing.Size(40, 20);
-            this.mixed_TextBox.TabIndex = 55;
-            this.mixed_TextBox.Text = "0";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(192, 136);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
-            this.label2.TabIndex = 56;
-            this.label2.Text = "mixed";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(279, 136);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 13);
-            this.label6.TabIndex = 57;
-            this.label6.Text = "MHz";
+            this.miscellaneous_groupbox.Controls.Add(this.tick_label);
+            this.miscellaneous_groupbox.Controls.Add(this.tick_btn);
+            this.miscellaneous_groupbox.Controls.Add(this.tick_TextBox);
+            this.miscellaneous_groupbox.Location = new System.Drawing.Point(12, 430);
+            this.miscellaneous_groupbox.Name = "miscellaneous_groupbox";
+            this.miscellaneous_groupbox.Size = new System.Drawing.Size(353, 69);
+            this.miscellaneous_groupbox.TabIndex = 41;
+            this.miscellaneous_groupbox.TabStop = false;
+            this.miscellaneous_groupbox.Text = "Miscellaneous";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(728, 450);
+            this.ClientSize = new System.Drawing.Size(728, 511);
+            this.Controls.Add(this.miscellaneous_groupbox);
             this.Controls.Add(this.Commands);
             this.Controls.Add(this.COM_groupbox);
             this.Controls.Add(this.ComLog);
@@ -571,6 +590,8 @@
             this.COM_groupbox.PerformLayout();
             this.Commands.ResumeLayout(false);
             this.Commands.PerformLayout();
+            this.miscellaneous_groupbox.ResumeLayout(false);
+            this.miscellaneous_groupbox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -579,7 +600,6 @@
 
         private System.Windows.Forms.HScrollBar phInc_hScrollBar;
         private System.Windows.Forms.HScrollBar volt_hScrollBar;
-        private System.Windows.Forms.HScrollBar ausc_hScrollBar;
         private System.Windows.Forms.RichTextBox ComLog;
         private System.Windows.Forms.GroupBox COM_groupbox;
         private System.Windows.Forms.Label COMState_label;
@@ -620,6 +640,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox mixed_TextBox;
+        private System.Windows.Forms.ComboBox rfmode_comboBox;
+        private System.Windows.Forms.GroupBox miscellaneous_groupbox;
     }
 }
 

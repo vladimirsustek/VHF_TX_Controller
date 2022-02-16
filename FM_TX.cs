@@ -11,8 +11,8 @@ namespace VHF_TX_Controller
     {
         private const string cmd_setDAC0phIncrement = "D0_SI_";
         private const string cmd_setDAC1Voltage = "D1_SV_";
-        private const string cmd_setAudioSource = "AU_SR_";
-        private const string cmd_getSystemTick = "TC_GT_";
+        private const string cmd_setRFMode = "RF_MD_";
+        private const string cmd_getSystemTick = "TC_GT_00000000";
 
         private const int TWO_LINES_RESPONSE = 2;
         private const int ONE_LINE_RESPONSE = 1;
@@ -52,15 +52,15 @@ namespace VHF_TX_Controller
 
             return result;
         }
-        public string cmdFM_TX_setAudioSource(int arg)
+        public string cmdFM_TX_setRFMode(int arg)
         {
             string result;
             string hexArg = arg.ToString("X").PadLeft(8, '0');
 
             try
             {
-                result = this.WriteAndReadLine(cmd_setAudioSource + hexArg, ONE_LINE_RESPONSE);
-                result = cmd_setAudioSource + hexArg + " = RX: " + result;
+                result = this.WriteAndReadLine(cmd_setRFMode + hexArg, ONE_LINE_RESPONSE);
+                result = cmd_setRFMode+ hexArg + " = RX: " + result;
 
             }
             catch (Exception e)
@@ -70,31 +70,35 @@ namespace VHF_TX_Controller
 
             return result;
         }
-        public string cmdFM_TX_getSystemTick()
+        public UInt32 cmdFM_TX_getSystemTick()
         {
-            int arg = 0;
-            string result;
-            string hexArg = arg.ToString("X").PadLeft(8, '0');
-            string hexRes;
+            int[] intarr;
+            UInt32 tick = 0;
 
             try
             {
-                result = this.WriteAndReadLine(cmd_getSystemTick + hexArg, ONE_LINE_RESPONSE);
-                string[] retval = result.Split(':');
-                byte[] bytes = Encoding.ASCII.GetBytes(retval[1]);
-                Array.Reverse(bytes, 0, bytes.Length);
-                UInt32 tick = BitConverter.ToUInt32(bytes, 0);
-                hexRes = tick.ToString("X").PadLeft(8, '0');
-                result = cmd_getSystemTick + hexArg + " = RX: " + retval[0] + ':' + hexRes;
+                intarr = this.WriteAndReadBytes(cmd_getSystemTick, 10);
+
+                if ((intarr[0] == (int)'S') && 
+                    (intarr[1] == (int)'T') && 
+                    (intarr[2] == (int)'C') && 
+                    (intarr[3] == (int)'K') &&
+                    (intarr[4] == (int)':') &&
+                    (intarr[9] == (int)'\n'))
+                {
+                    tick += (UInt32)intarr[5] << 24;
+                    tick += (UInt32)intarr[6] << 16;
+                    tick += (UInt32)intarr[7] << 8;
+                    tick += (UInt32)intarr[8] << 0;
+                }
 
             }
             catch (Exception e)
             {
-                //result = e.ToString();
-                result = "Exception";
+                tick = 0;
             }
 
-            return result;
+            return tick;
         }
     }
 }

@@ -107,19 +107,22 @@ namespace VHF_TX_Controller
             return response;
         }
 
-        public string WriteAndReadBytes(string line, int bytes = 14)
+        public int[] WriteAndReadBytes(string line, int bytes)
         {
-            string response = "";
+
+            int[] response = new int[10];
 
             if (!this.IsOpen)
-                return "Port unavailable";
+                return response;
 
             this.WriteLine(line);
 
+            int idx = 0;
             while (bytes > 0)
             {
-                response += this.ReadByte();
+                response[idx] = (int)this.ReadByte();
                 bytes--;
+                idx++;
             }
 
             return response;

@@ -26,6 +26,7 @@ namespace VHF_TX_Controller
             textbox.AppendText(localDate.ToString("HH:mm:ss.ff: ", System.Globalization.DateTimeFormatInfo.InvariantInfo));
             textbox.AppendText(line);
             textbox.AppendText(Environment.NewLine);
+            textbox.ScrollToCaret();
 
         }
         private void MainForm_Load(object sender, EventArgs e)
@@ -33,6 +34,7 @@ namespace VHF_TX_Controller
             this.baudrate_combobox.SelectedIndex = this.baudrate_combobox.FindStringExact("57600");
             this.stopbits_combobox.SelectedIndex = this.stopbits_combobox.FindStringExact("One");
             this.parity_combobox.SelectedIndex = this.parity_combobox.FindStringExact("None");
+            this.rfmode_comboBox.SelectedIndex = this.rfmode_comboBox.FindStringExact("DAC0-Off");
 
             this.DAC1f_TextBox.Text = this.GetDAC1Freq().ToString();
             this.phInc_textbox.Text = this.GetDAC0Freq().ToString();
@@ -160,7 +162,7 @@ namespace VHF_TX_Controller
                 this.printlineTimestamped(this.ComLog, strPhInc);
                 string strVolt = this.Device.cmdFM_TX_setDAC1Voltage(this.volt_hScrollBar.Value);
                 this.printlineTimestamped(this.ComLog, strVolt);
-                string strAudSrc = this.Device.cmdFM_TX_setAudioSource(this.ausc_hScrollBar.Value);
+                string strAudSrc = this.Device.cmdFM_TX_setRFMode(this.rfmode_comboBox.SelectedIndex);
                 this.printlineTimestamped(this.ComLog, strAudSrc);
 
             }
@@ -169,21 +171,15 @@ namespace VHF_TX_Controller
         private void tick_btn_Click(object sender, EventArgs e)
         {
 
-            string strTick = this.Device.cmdFM_TX_getSystemTick();
+            UInt32 tick = this.Device.cmdFM_TX_getSystemTick();
 
-            // Awaited response: TCK:0123457\n - hexadecimal 32b
-            // Needed split, parsing and conversion of tickval
-            if (strTick.Contains("TCK"))
+            if (tick != 0)
             {
-                string[] split = strTick.Split(':');
-                if (split.Length == 3)
-                {
-                    int tick = Convert.ToInt32(split[2], 16);
-                    float tick_seconds = (float)tick / 1000;
-                    this.tick_TextBox.Text = tick_seconds.ToString();
-                    this.printlineTimestamped(this.ComLog, strTick);
-
-                }
+                float tick_seconds = (float)tick / 1000;
+                this.tick_TextBox.Text = tick_seconds.ToString();
+                string hexRes = tick.ToString("X").PadLeft(8, '0');
+                string result = "TC_GT_00000000" + " = RX: TCK: " + hexRes;
+                this.printlineTimestamped(this.ComLog, result);
             }
 
         }
@@ -200,9 +196,9 @@ namespace VHF_TX_Controller
             this.printlineTimestamped(this.ComLog, strVolt);
         }
 
-        private void auscSend_btn_Click(object sender, EventArgs e)
+        private void rfmdSend_btn_Click(object sender, EventArgs e)
         {
-            string strAudSrc = this.Device.cmdFM_TX_setAudioSource(this.ausc_hScrollBar.Value);
+            string strAudSrc = this.Device.cmdFM_TX_setRFMode(this.rfmode_comboBox.SelectedIndex);
             this.printlineTimestamped(this.ComLog, strAudSrc);
         }
 
