@@ -65,8 +65,7 @@ namespace VHF_TX_Controller
             // Note that calculation is just estimation
 
             double delta_v = 0.076294;
-            double ivolt = (double)this.volt_hScrollBar.Value * delta_v;
-            int volt = (int)ivolt;
+            double volt = (double)this.volt_hScrollBar.Value * delta_v;
             this.volt_textBox.Text = volt.ToString();
 
             double voltV = (double)volt / 1000;
@@ -83,10 +82,11 @@ namespace VHF_TX_Controller
             // DDS frequency calculation: f = delta_v * phInc
             // Calculation is digititally precise value => calc should meet real value
             double delta_f = 3.576279, div_10kHz = 10000;
-            int ifreq = (int)(((double)this.phInc_hScrollBar.Value * delta_f) / div_10kHz);
-            float freq = (float)ifreq / 100;
+            //int ifreq = (int)(((double)this.phInc_hScrollBar.Value * delta_f) / div_10kHz);
+            //int ifreq = (int)(((double)this.phInc_hScrollBar.Value * delta_f) / div_10kHz);
+            double freq =((float)this.phInc_hScrollBar.Value) * delta_f/ 1e6;
 
-            return freq;
+            return (float)freq;
         }
 
         private void phInc_hScrollBar_Scroll(object sender, ScrollEventArgs e)
@@ -202,8 +202,22 @@ namespace VHF_TX_Controller
             this.printlineTimestamped(this.ComLog, strAudSrc);
         }
 
-        private void volt_textBox_TextChanged(object sender, EventArgs e)
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
+            this.phInc_hScrollBar.SmallChange = (int)this.phinc_numericUpDown.Value;
+            this.phInc_hScrollBar.LargeChange = (int)this.phinc_numericUpDown.Value;
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            this.volt_hScrollBar.SmallChange = (int)this.volt_numericUpDown.Value;
+            this.volt_hScrollBar.LargeChange = (int)this.volt_numericUpDown.Value;
+        }
+
+        private void defaultInc_btn_Click(object sender, EventArgs e)
+        {
+            this.volt_numericUpDown.Value = 13;
+            this.phinc_numericUpDown.Value = 277;
         }
     }
 }
