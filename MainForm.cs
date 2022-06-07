@@ -219,5 +219,10 @@ namespace VHF_TX_Controller
             this.volt_numericUpDown.Value = 13;
             this.phinc_numericUpDown.Value = 277;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Device.cmdFM_TX_setSystemReset();
+        }
     }
 }

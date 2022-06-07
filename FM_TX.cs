@@ -12,6 +12,7 @@ namespace VHF_TX_Controller
         private const string cmd_setDAC0phIncrement = "D0_SI_";
         private const string cmd_setDAC1Voltage = "D1_SV_";
         private const string cmd_setRFMode = "RF_MD_";
+        private const string cmd_setSystemReset = "SR_ST_00000000";
         private const string cmd_getSystemTick = "TC_GT_00000000";
 
         private const int TWO_LINES_RESPONSE = 2;
@@ -99,6 +100,23 @@ namespace VHF_TX_Controller
             }
 
             return tick;
+        }
+        public string cmdFM_TX_setSystemReset()
+        {
+            string result;
+
+            try
+            {
+                result = this.WriteAndReadLine(cmd_setSystemReset, ONE_LINE_RESPONSE);
+                result = cmd_setSystemReset + " = RX: " + result;
+
+            }
+            catch (Exception e)
+            {
+                result = e.ToString();
+            }
+
+            return result;
         }
     }
 }

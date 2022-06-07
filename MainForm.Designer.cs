@@ -51,6 +51,7 @@
             this.baudrate_combobox = new System.Windows.Forms.ComboBox();
             this.COM_combobox = new System.Windows.Forms.ComboBox();
             this.Commands = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.defaultInc_btn = new System.Windows.Forms.Button();
             this.volt_numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.phinc_numericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -78,7 +79,7 @@
             this.tick_btn = new System.Windows.Forms.Button();
             this.COM = new System.IO.Ports.SerialPort(this.components);
             this.miscellaneous_groupbox = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.rst_btn = new System.Windows.Forms.Button();
             this.COM_groupbox.SuspendLayout();
             this.Commands.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.volt_numericUpDown)).BeginInit();
@@ -368,6 +369,16 @@
             this.Commands.TabStop = false;
             this.Commands.Text = "COM settings";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(227, 128);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(61, 13);
+            this.label9.TabIndex = 64;
+            this.label9.Text = "aprox. VCO";
+            // 
             // defaultInc_btn
             // 
             this.defaultInc_btn.Location = new System.Drawing.Point(231, 17);
@@ -645,6 +656,7 @@
             // 
             // miscellaneous_groupbox
             // 
+            this.miscellaneous_groupbox.Controls.Add(this.rst_btn);
             this.miscellaneous_groupbox.Controls.Add(this.tick_label);
             this.miscellaneous_groupbox.Controls.Add(this.tick_btn);
             this.miscellaneous_groupbox.Controls.Add(this.tick_TextBox);
@@ -655,15 +667,16 @@
             this.miscellaneous_groupbox.TabStop = false;
             this.miscellaneous_groupbox.Text = "Miscellaneous";
             // 
-            // label9
+            // rst_btn
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(227, 128);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(61, 13);
-            this.label9.TabIndex = 64;
-            this.label9.Text = "aprox. VCO";
+            this.rst_btn.Location = new System.Drawing.Point(215, 28);
+            this.rst_btn.Margin = new System.Windows.Forms.Padding(2);
+            this.rst_btn.Name = "rst_btn";
+            this.rst_btn.Size = new System.Drawing.Size(109, 24);
+            this.rst_btn.TabIndex = 55;
+            this.rst_btn.Text = "System Reset";
+            this.rst_btn.UseVisualStyleBackColor = true;
+            this.rst_btn.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 
@@ -741,6 +754,7 @@
         private System.Windows.Forms.NumericUpDown phinc_numericUpDown;
         private System.Windows.Forms.Button defaultInc_btn;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button rst_btn;
     }
 }
 
